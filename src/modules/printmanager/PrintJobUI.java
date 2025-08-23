@@ -69,25 +69,38 @@ public class PrintJobUI {
     }
 
     private void submitJob() {
-        System.out.print("Enter username: ");
-        String username = scanner.nextLine().trim();
-
-        System.out.print("Enter file name: ");
-        String filename = scanner.nextLine().trim();
-
-        System.out.print("Enter number of copies: ");
-        int copies;
-        try {
-            copies = Integer.parseInt(scanner.nextLine().trim());
-            if (copies <= 0) {
-                System.out.println("Invalid number of copies. Defaulting to 1.");
-                copies = 1;
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid input. Defaulting to 1 copy.");
-            copies = 1;
+        // Validate username
+        String username;
+        while (true) {
+            System.out.print("Enter username: ");
+            username = scanner.nextLine().trim();
+            if (!username.isEmpty()) break;
+            System.out.println("Username cannot be empty. Please try again.");
         }
 
+        // Validate filename
+        String filename;
+        while (true) {
+            System.out.print("Enter file name: ");
+            filename = scanner.nextLine().trim();
+            if (!filename.isEmpty()) break;
+            System.out.println("File name cannot be empty. Please try again.");
+        }
+
+        // Validate copies
+        int copies;
+        while (true) {
+            System.out.print("Enter number of copies: ");
+            try {
+                copies = Integer.parseInt(scanner.nextLine().trim());
+                if (copies > 0) break;
+                System.out.println("Number of copies must be greater than 0.");
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a positive integer.");
+            }
+        }
+
+        // Role (optional, defaults to other if blank)
         System.out.print("Enter role (staff/teacher/student/other): ");
         String role = scanner.nextLine().trim();
         if (role.isEmpty()) role = "other";
@@ -96,6 +109,7 @@ public class PrintJobUI {
         queue.enqueue(job);
         System.out.println("Job submitted: " + job);
     }
+
 
 
 
