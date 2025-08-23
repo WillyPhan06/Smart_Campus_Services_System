@@ -1,3 +1,4 @@
+package modules.roombooking;
 
 import java.util.Scanner;
 

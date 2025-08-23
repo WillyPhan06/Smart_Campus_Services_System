@@ -1,3 +1,5 @@
+package modules.roombooking;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -47,7 +49,7 @@ public class Main {
             }
         } while(choice != 5);
 
-        sc.close(); // Close scanner when done
+        //sc.close(); // Close scanner when done
     }
 
     // Display the main menu

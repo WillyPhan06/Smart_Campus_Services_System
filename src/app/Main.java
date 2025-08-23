@@ -1,7 +1,7 @@
 package app;
 
 import core.ModuleRegistry;
-import core.AbstractModule;
+import core.AbstractModule;  // Just in case
 import modules.printmanager.PrintJobManager;
 import modules.digitallibrary.LibraryManager;
 import modules.eventcalendar.EventCalendarManager;
