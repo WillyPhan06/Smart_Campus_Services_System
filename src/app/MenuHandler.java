@@ -33,7 +33,7 @@ public class MenuHandler {
                 System.out.println("Exiting...");
                 break;
             } else if (choice > 0 && choice < index) {
-                registry.getModules().get(choice - 1).start(scanner);
+                registry.getModules()[choice - 1].start(scanner);
             } else {
                 System.out.println("Invalid choice, try again.");
             }

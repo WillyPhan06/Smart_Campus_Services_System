@@ -1,18 +1,29 @@
 package core;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ModuleRegistry {
-    private List<AbstractModule> modules = new ArrayList<>();
+    private AbstractModule[] modules;
+    private int size;
+
+    public ModuleRegistry(int capacity) {
+        modules = new AbstractModule[capacity];
+        size = 0;
+    }
 
     // Register a module
     public void register(AbstractModule module) {
-        modules.add(module);
+        if (size < modules.length) {
+            modules[size++] = module;
+        } else {
+            System.out.println("ModuleRegistry is full, cannot register more modules.");
+        }
     }
 
-    // Get all modules
-    public List<AbstractModule> getModules() {
-        return modules;
+    // Get only the filled modules (trimmed array)
+    public AbstractModule[] getModules() {
+        AbstractModule[] result = new AbstractModule[size];
+        for (int i = 0; i < size; i++) {
+            result[i] = modules[i];
+        }
+        return result;
     }
 }

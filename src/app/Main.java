@@ -1,18 +1,17 @@
 package app;
 
 import core.ModuleRegistry;
-import core.AbstractModule;  // Just in case
 import modules.printmanager.PrintJobManager;
 import modules.digitallibrary.LibraryManager;
 import modules.eventcalendar.EventCalendarManager;
 import modules.assignmentplanner.AssignmentPlannerModule;
 import modules.roombooking.RoomBookingModule;
-import java.util.Scanner;  // ✅ add this import
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        // Create registry
-        ModuleRegistry registry = new ModuleRegistry();
+        // Create registry with capacity for 10 modules
+        ModuleRegistry registry = new ModuleRegistry(10);
 
         // Register modules here
         registry.register(new PrintJobManager());
@@ -25,7 +24,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         // Start the menu
-        MenuHandler menu = new MenuHandler(registry, scanner); // ✅ pass scanner
+        MenuHandler menu = new MenuHandler(registry, scanner);
         menu.start();
     }
 }
