@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class LibraryManager extends AbstractModule {
     private BookList library = new BookList();
 
-    public LibraryManager() {
+    /*public LibraryManager() {
         // Add default 10 books
         String[][] defaultBooks = {
                 {"Clean Code", "Robert C. Martin"},
@@ -21,9 +21,9 @@ public class LibraryManager extends AbstractModule {
                 {"Patterns of Enterprise Application Architecture", "Martin Fowler"}
         };
         for (String[] info : defaultBooks) {
-            library.addBook(info[0], info[1]);
+            library.addBook(info[0], info[1], 5);
         }
-    }
+    }*/
 
     @Override
     public String getModuleName() {
@@ -44,6 +44,9 @@ public class LibraryManager extends AbstractModule {
             System.out.println("8) Sort + Binary Search by exact title");
             System.out.println("9) Top N most borrowed books");
             System.out.println("10) Show operation logs");
+            System.out.println("11) Show all books (sorted by title)");
+            System.out.println("12) Delete book (by id )");
+            System.out.println("13) Update book (by id )");
             System.out.println("0) Back to main menu");
             System.out.print("Your choice: ");
 
@@ -55,14 +58,19 @@ public class LibraryManager extends AbstractModule {
                     String t1 = scanner.nextLine();
                     System.out.print("Enter author: ");
                     String a1 = scanner.nextLine();
-                    library.addBook(t1, a1);
+                    System.out.print("Enter quantity: ");
+                    int q1 = scanner.nextInt();
+                    library.addBook(t1, a1, q1);
                     break;
                 case "2":
                     System.out.print("Enter book title: ");
                     String t2 = scanner.nextLine();
                     System.out.print("Enter author: ");
                     String a2 = scanner.nextLine();
-                    library.addBookSorted(t2, a2);
+                    System.out.print("Enter quantity: ");
+                    int q2 = scanner.nextInt();
+                    library.addBookSorted(t2, a2, q2);
+
                     break;
                 case "3":
                     library.showAllBooks();
@@ -94,13 +102,11 @@ public class LibraryManager extends AbstractModule {
                     }
                     break;
                 case "8":
-                    Book[] arr = library.toArray();
-                    AlgoUtils.bubbleSortByTitle(arr);
                     System.out.print("Enter exact title to search: ");
                     String key = scanner.nextLine();
-                    Book found = AlgoUtils.binarySearchByTitle(arr, key);
-                    System.out.println(found != null ? found : "Not found.");
+                    library.sortAndBinarySearch(key); // BookList lo hết việc
                     break;
+
                 case "9":
                     System.out.print("Enter N: ");
                     try {
@@ -121,6 +127,40 @@ public class LibraryManager extends AbstractModule {
                     break;
                 case "0":
                     return; // ✅ Back to main menu
+                case "11":
+                    Book[] sortedArr = library.toArray();
+                    AlgoUtils.bubbleSortByTitle(sortedArr);
+
+                    System.out.println("Books sorted by title:");
+                    for (Book b : sortedArr) {
+                        System.out.println(b.id+ "."+ " " + b.title + " by " + b.author
+                                + " | Qty: " + b.quantity
+                                + " | Borrowed: " + b.borrowCount
+                                + " | Status: " + b.status);
+                    }
+                    break;
+                case "12":
+                    System.out.print("Enter ID of book to delete: ");
+                    int delId = Integer.parseInt(scanner.nextLine());
+                    library.deleteBook(delId);
+                    break;
+                case "13":
+                    System.out.print("Enter ID of book to update: ");
+                    int updId = Integer.parseInt(scanner.nextLine());
+
+                    System.out.print("Enter new title (press Enter to skip): ");
+                    String newT = scanner.nextLine();
+
+                    System.out.print("Enter new author (press Enter to skip): ");
+                    String newA = scanner.nextLine();
+
+                    System.out.print("Enter new quantity (press Enter to skip): ");
+                    String qStr = scanner.nextLine();
+                    Integer newQ = qStr.isEmpty() ? null : Integer.parseInt(qStr);
+
+                    library.updateBook(updId, newT, newA, newQ);
+                    break;
+
                 default:
                     System.out.println("Invalid choice.");
             }

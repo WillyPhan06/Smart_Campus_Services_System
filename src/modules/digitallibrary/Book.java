@@ -7,20 +7,24 @@ public class Book {
     int id;
     String title;
     String author;
+    int quantity;
     Status status;
     int borrowCount;
 
-    public Book(int id, String title, String author) {
+    public Book(int id, String title, String author, int quantity) {
         this.id = id;
         this.title = title;
         this.author = author;
-        this.status = Status.AVAILABLE;
+        this.quantity = quantity;
         this.borrowCount = 0;
+        this.status = (quantity>0 ? Status.AVAILABLE : Status.UNAVAILABLE);
     }
 
     @Override
     public String toString() {
-        return String.format("#%d | '%s' - %s | %s | borrowCount=%d",
-                id, title, author, status, borrowCount);
+        return "[" + id + "] " + title + " by " + author +
+                " | Qty: " + quantity +
+                " | Borrowed: " + borrowCount +
+                " | Status: " + status;
     }
 }
