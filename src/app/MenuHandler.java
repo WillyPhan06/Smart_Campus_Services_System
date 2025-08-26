@@ -13,9 +13,7 @@ public class MenuHandler {
         this.scanner = scanner;
     }
 
-
     public void start() {
-        Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("=== Smart Campus Services ===");
             int index = 1;
@@ -26,6 +24,12 @@ public class MenuHandler {
             System.out.println(index + ". Exit");
 
             System.out.print("Choose an option: ");
+
+            // Input validation
+            while (!scanner.hasNextInt()) {
+                System.out.print("Please enter a number: ");
+                scanner.next(); // discard invalid input
+            }
             int choice = scanner.nextInt();
             scanner.nextLine(); // consume newline
 
